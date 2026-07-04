@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact — Divyaprem Vanapamula</title>
+<title>Contact · Divyaprem Vanapamula</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700;1,9..144,900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,500;0,6..72,600;0,6..72,800;1,6..72,300;1,6..72,500;1,6..72,600;1,6..72,800&family=Libre+Franklin:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <style>
 /* ── TOKENS (identical to main) ─────────────────────── */
@@ -18,9 +18,9 @@
   --ink3:    #5c5650;
   --border:  #2c2520;
   --red:     #df3700;
-  --serif:   'Fraunces', Georgia, serif;
-  --sans:    'Inter', system-ui, sans-serif;
-  --mono:    'JetBrains Mono', monospace;
+  --serif:   'Newsreader', Georgia, serif;
+  --sans:    'Libre Franklin', system-ui, sans-serif;
+  --mono:    'IBM Plex Mono', monospace;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -368,7 +368,7 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
   const subj  = document.getElementById('f-subject').value || 'Portfolio contact';
   if (!name || !email || !msg) return;
 
-  const body = encodeURIComponent(`Hi Divyaprem,\n\n${msg}\n\n— ${name}\n${email}`);
+  const body = encodeURIComponent(`Hi Divyaprem,\n\n${msg}\n\nThanks,\n${name}\n${email}`);
   window.location.href = `mailto:divyapremvnp@gmail.com?subject=${encodeURIComponent(subj)}&body=${body}`;
 
   this.style.display = 'none';
