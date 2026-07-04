@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Divyaprem Vanapamula</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700;1,9..144,900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<style>
+/* ── TOKENS (identical to main) ─────────────────────── */
+:root {
+  --cream:   #0e0c0a;
+  --cream2:  #161310;
+  --cream3:  #201d19;
+  --ink:     #ede7d9;
+  --ink2:    #9a9080;
+  --ink3:    #5c5650;
+  --border:  #2c2520;
+  --red:     #df3700;
+  --serif:   'Fraunces', Georgia, serif;
+  --sans:    'Inter', system-ui, sans-serif;
+  --mono:    'JetBrains Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.6;
+  overflow-x: hidden;
+  cursor: none;
+}
+a { color: inherit; text-decoration: none; }
+
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' fill='white' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+/* ── CURSOR ─────────────────────────────────────────── */
+.cursor {
+  position: fixed; top: 0; left: 0;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--ink); pointer-events: none; z-index: 9999;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+  transition: width 0.35s cubic-bezier(0.4,0,0.2,1), height 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.cursor.expanded { width: 64px; height: 64px; }
+
+/* ── SCROLL PROGRESS ────────────────────────────────── */
+#progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; background: var(--red); z-index: 500; transform-origin: left; transform: scaleX(0); }
+
+/* ── NAV ────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.5rem clamp(1.5rem, 5vw, 4rem);
+  background: rgba(14,12,10,0.92); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-wordmark { font-family: var(--serif); font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; }
+.nav-wordmark sup { font-family: var(--mono); font-size: 0.55rem; color: var(--red); font-weight: 400; vertical-align: super; letter-spacing: 1px; }
+.nav-right { display: flex; align-items: center; gap: 2.5rem; }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a { font-size: 0.82rem; color: var(--ink2); transition: color 0.2s; }
+.nav-links a:hover { color: var(--ink); }
+.nav-back { font-family: var(--mono); font-size: 0.68rem; color: var(--ink3); transition: color 0.2s; }
+.nav-back:hover { color: var(--ink); }
+
+/* ── HERO ───────────────────────────────────────────── */
+#contact-hero {
+  min-height: 52vh;
+  padding: clamp(8rem,12vw,11rem) clamp(1.5rem,5vw,4rem) 5rem;
+  position: relative; z-index: 1;
+  display: flex; align-items: flex-end;
+}
+.ch-inner { max-width: 1280px; width: 100%; margin: 0 auto; }
+.ch-label {
+  font-family: var(--mono); font-size: 0.65rem; color: var(--ink3);
+  letter-spacing: 2.5px; text-transform: uppercase;
+  margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;
+  opacity: 0; transform: translateY(12px);
+  animation: fu 0.7s 0.3s forwards;
+}
+.ch-label::before { content: ''; width: 28px; height: 1px; background: var(--ink3); }
+h1.ch-heading {
+  font-family: var(--serif); font-weight: 900;
+  font-size: clamp(4rem,10vw,9rem);
+  line-height: 0.95; letter-spacing: -0.04em;
+  opacity: 0; transform: translateY(20px);
+  animation: fu 0.8s 0.45s forwards;
+}
+h1.ch-heading em { font-style: italic; font-weight: 300; color: var(--ink2); }
+.ch-sub {
+  margin-top: 2rem; max-width: 520px;
+  font-size: 1rem; color: var(--ink2); line-height: 1.8;
+  border-left: 2px solid var(--red); padding-left: 1.25rem;
+  opacity: 0; transform: translateY(12px);
+  animation: fu 0.7s 0.65s forwards;
+}
+@keyframes fu { to { opacity: 1; transform: translateY(0); } }
+
+/* ── CONTACT BODY ───────────────────────────────────── */
+#contact-body {
+  padding: 6rem clamp(1.5rem,5vw,4rem) 9rem;
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--border);
+}
+.cb-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 360px;
+  gap: 7rem; align-items: start;
+}
+.cf-section-label {
+  font-family: var(--mono); font-size: 0.62rem; color: var(--ink3);
+  letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 2.5rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.cf-section-label span { color: var(--red); }
+
+/* FORM */
+.contact-form { display: flex; flex-direction: column; gap: 1.75rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.form-field { display: flex; flex-direction: column; gap: 0.55rem; }
+.form-field label {
+  font-family: var(--mono); font-size: 0.6rem; color: var(--ink3);
+  letter-spacing: 2px; text-transform: uppercase;
+}
+.form-field input,
+.form-field select,
+.form-field textarea {
+  background: var(--cream2); border: 1px solid var(--border);
+  border-radius: 3px; color: var(--ink);
+  font-family: var(--sans); font-size: 0.875rem;
+  padding: 0.875rem 1rem; transition: border-color 0.2s, background 0.2s;
+  outline: none; resize: none; -webkit-appearance: none;
+}
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus { border-color: var(--red); background: var(--cream3); }
+.form-field input::placeholder,
+.form-field textarea::placeholder { color: var(--ink3); }
+.form-field select { cursor: pointer; color: var(--ink); }
+.form-field select option { background: var(--cream2); color: var(--ink); }
+.form-field textarea { min-height: 160px; line-height: 1.7; }
+.form-submit {
+  display: inline-flex; align-items: center; gap: 0.75rem;
+  background: var(--red); color: #fff;
+  font-size: 0.875rem; font-weight: 500;
+  padding: 1rem 2.5rem; border: 1px solid var(--red); border-radius: 3px;
+  cursor: pointer; transition: background 0.2s, transform 0.2s;
+  width: fit-content; font-family: var(--sans);
+}
+.form-submit:hover { background: #b82e00; transform: translateY(-1px); }
+.form-success {
+  display: none; padding: 4rem 0;
+}
+.form-success.visible { display: block; }
+.success-mark {
+  font-size: 2rem; color: var(--red); margin-bottom: 1.5rem;
+  font-family: var(--mono); display: block;
+}
+.success-h { font-family: var(--serif); font-weight: 700; font-size: 2rem; margin-bottom: 0.75rem; }
+.success-p { color: var(--ink2); font-size: 0.9rem; line-height: 1.8; }
+
+/* SIDEBAR */
+.cs-block { margin-bottom: 2.75rem; }
+.cs-block-label {
+  font-family: var(--mono); font-size: 0.6rem; color: var(--ink3);
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 1.25rem; padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+.cs-links { display: flex; flex-direction: column; }
+.cs-link {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 0; border-bottom: 1px solid var(--border);
+  transition: color 0.2s;
+}
+.cs-link:hover { color: var(--red); }
+.cs-link-left { display: flex; flex-direction: column; gap: 0.2rem; }
+.cs-link-name { font-size: 0.875rem; font-weight: 500; }
+.cs-link-sub { font-family: var(--mono); font-size: 0.6rem; color: var(--ink3); transition: color 0.2s; }
+.cs-link:hover .cs-link-sub { color: var(--red); }
+.cs-arr { font-size: 0.85rem; color: var(--ink3); transition: transform 0.2s, color 0.2s; }
+.cs-link:hover .cs-arr { transform: translate(3px,-3px); color: var(--red); }
+.cs-note {
+  background: var(--cream2); border: 1px solid var(--border);
+  border-left: 2px solid var(--red);
+  padding: 1.25rem 1.25rem 1.25rem 1.5rem;
+  font-family: var(--mono); font-size: 0.68rem;
+  color: var(--ink3); line-height: 1.8;
+}
+.cs-note strong { color: var(--ink2); display: block; margin-bottom: 0.4rem; }
+
+/* ── FOOTER ─────────────────────────────────────────── */
+footer {
+  background: var(--cream2); border-top: 1px solid var(--border);
+  padding: 2rem clamp(1.5rem,5vw,4rem);
+  position: relative; z-index: 1;
+}
+.footer-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.footer-copy { font-family: var(--mono); font-size: 0.65rem; color: rgba(255,255,255,0.25); }
+.footer-links { display: flex; gap: 2rem; list-style: none; }
+.footer-links a { font-size: 0.78rem; color: rgba(255,255,255,0.3); transition: color 0.2s; }
+.footer-links a:hover { color: rgba(255,255,255,0.8); }
+
+/* ── RESPONSIVE ─────────────────────────────────────── */
+@media (max-width: 1024px) { .cb-inner { grid-template-columns: 1fr; gap: 4rem; } .cb-sidebar { order: -1; } }
+@media (max-width: 640px) { .form-row { grid-template-columns: 1fr; } .nav-links { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cur"></div>
+<div id="progress"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-wordmark">Divyaprem V <sup>AI · AUTOMATION</sup></a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html#work">Projects</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#experience">Experience</a></li>
+      <li><a href="index.html#blog">Blog</a></li>
+    </ul>
+    <a href="index.html" class="nav-back">← Back to portfolio</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="contact-hero">
+  <div class="ch-inner">
+    <div class="ch-label">Contact</div>
+    <h1 class="ch-heading">Say <em>hello.</em></h1>
+  </div>
+</section>
+
+<!-- CONTACT BODY -->
+<section id="contact-body">
+  <div class="cb-inner">
+
+    <!-- FORM -->
+    <div class="cb-form">
+      <div class="cf-section-label"><span>01</span> Send a message</div>
+
+      <form class="contact-form" id="contact-form" novalidate>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="f-name">Your name</label>
+            <input type="text" id="f-name" name="name" placeholder="Your name" required>
+          </div>
+          <div class="form-field">
+            <label for="f-email">Email address</label>
+            <input type="email" id="f-email" name="email" placeholder="hello@example.com" required>
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="f-subject">What's this about?</label>
+          <select id="f-subject" name="subject">
+            <option value="">Select a topic</option>
+            <option value="AI &amp; Automation discussion">AI &amp; Automation discussion</option>
+            <option value="Microsoft Power Platform">Microsoft Power Platform</option>
+            <option value="LLMOps / AI Agents">LLMOps / AI Agents</option>
+            <option value="Collaboration idea">Collaboration idea</option>
+            <option value="General hello">General hello</option>
+            <option value="Something else">Something else</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="f-message">Message</label>
+          <textarea id="f-message" name="message" placeholder="What's on your mind? I read every message." required></textarea>
+        </div>
+
+        <button type="submit" class="form-submit">Send message →</button>
+      </form>
+
+      <div class="form-success" id="form-success">
+        <span class="success-mark">✓</span>
+        <div class="success-h">Message sent.</div>
+        <p class="success-p">Thanks for reaching out. I'll get back to you when I can.<br>Feel free to connect on LinkedIn in the meantime.</p>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="cb-sidebar">
+      <div class="cs-block">
+        <div class="cs-block-label">Find me online</div>
+        <div class="cs-links">
+          <a href="https://github.com/Prem3707" target="_blank" rel="noopener" class="cs-link">
+            <div class="cs-link-left">
+              <span class="cs-link-name">GitHub</span>
+              <span class="cs-link-sub">github.com/Prem3707</span>
+            </div>
+            <span class="cs-arr">↗</span>
+          </a>
+          <a href="https://linkedin.com/in/divyaprem-v-840841109" target="_blank" rel="noopener" class="cs-link">
+            <div class="cs-link-left">
+              <span class="cs-link-name">LinkedIn</span>
+              <span class="cs-link-sub">in/divyaprem-v-840841109</span>
+            </div>
+            <span class="cs-arr">↗</span>
+          </a>
+          <a href="mailto:divyapremvnp@gmail.com" class="cs-link">
+            <div class="cs-link-left">
+              <span class="cs-link-name">Gmail</span>
+              <span class="cs-link-sub">divyapremvnp@gmail.com</span>
+            </div>
+            <span class="cs-arr">↗</span>
+          </a>
+          <a href="https://instagram.com/_.premsss._" target="_blank" rel="noopener" class="cs-link">
+            <div class="cs-link-left">
+              <span class="cs-link-name">Instagram</span>
+              <span class="cs-link-sub">@_.premsss._</span>
+            </div>
+            <span class="cs-arr">↗</span>
+          </a>
+        </div>
+      </div>
+
+    </aside>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-copy">© 2026 Divyaprem Vanapamula. AI &amp; Automation Specialist · Birmingham, UK</div>
+    <ul class="footer-links">
+      <li><a href="index.html#work">Projects</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#experience">Experience</a></li>
+      <li><a href="index.html#blog">Blog</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+/* cursor */
+const cur = document.getElementById('cur');
+document.addEventListener('mousemove', e => { cur.style.left = e.clientX + 'px'; cur.style.top = e.clientY + 'px'; });
+document.querySelectorAll('a, button, input, select, textarea').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('expanded'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('expanded'));
+});
+
+/* scroll progress */
+window.addEventListener('scroll', () => {
+  const p = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+  document.getElementById('progress').style.transform = `scaleX(${p})`;
+});
+
+/* form submit */
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name  = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const msg   = document.getElementById('f-message').value.trim();
+  const subj  = document.getElementById('f-subject').value || 'Portfolio contact';
+  if (!name || !email || !msg) return;
+
+  const body = encodeURIComponent(`Hi Divyaprem,\n\n${msg}\n\n— ${name}\n${email}`);
+  window.location.href = `mailto:divyapremvnp@gmail.com?subject=${encodeURIComponent(subj)}&body=${body}`;
+
+  this.style.display = 'none';
+  const s = document.getElementById('form-success');
+  s.style.display = 'block';
+  requestAnimationFrame(() => s.classList.add('visible'));
+});
+</script>
+</body>
+</html>
